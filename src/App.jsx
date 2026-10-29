@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Header from './components/Header';
 import StepIndicator from './components/StepIndicator';
@@ -39,9 +39,21 @@ export default function App() {
     savePreference('expenseSplitterLanguage', i18n.resolvedLanguage);
   }, [i18n, i18n.resolvedLanguage, t, route.page]);
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    // Switch each foreground/background pair together, without low-contrast intermediate colours.
+    root.classList.add('theme-switching');
+    root.dataset.theme = theme;
     savePreference('expenseSplitterDarkMode', String(theme === 'dark'));
+    let secondFrame;
+    const firstFrame = requestAnimationFrame(() => {
+      secondFrame = requestAnimationFrame(() => root.classList.remove('theme-switching'));
+    });
+    return () => {
+      cancelAnimationFrame(firstFrame);
+      cancelAnimationFrame(secondFrame);
+      root.classList.remove('theme-switching');
+    };
   }, [theme]);
 
   useEffect(() => {

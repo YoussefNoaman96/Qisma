@@ -6,6 +6,8 @@ Qisma builds PDF reports on the device with jsPDF and AutoTable. The report modu
 
 Unknown routes render the recovery page, while production HTML requests for missing paths return HTTP 404. A React error boundary provides a reload action without clearing browser data. Entrance animation uses opacity and translation only, with no scroll listener or animation framework; the reduced-motion media query disables it.
 
+Theme foregrounds and backgrounds switch together before paint. Colour transitions are briefly suspended during the theme change so intermediate blends cannot reduce text contrast; normal control transitions resume afterward. Browser tests verify the first painted colour pair as well as the settled page.
+
 ## Request flow
 
 ```mermaid

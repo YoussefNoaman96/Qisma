@@ -152,3 +152,10 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Theme colours update in one paint; ordinary interaction transitions remain enabled. */
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}

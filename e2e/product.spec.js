@@ -14,6 +14,33 @@ test.beforeEach(async ({ page }) => {
   await openEnglishApp(page);
 });
 
+test('theme changes keep readable foreground and background colours on the first paint', async ({
+  page,
+}) => {
+  await page.evaluate(() => {
+    window.themePaints = [];
+    const observer = new MutationObserver(() => {
+      if (document.documentElement.dataset.theme !== 'dark') return;
+      requestAnimationFrame(() => {
+        const styles = getComputedStyle(document.querySelector('nav a[aria-current="page"]'));
+        window.themePaints.push({ foreground: styles.color, background: styles.backgroundColor });
+        observer.disconnect();
+      });
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+  });
+  await page.getByRole('button', { name: 'Theme', exact: true }).click();
+  await page.getByRole('menuitemradio', { name: 'Dark', exact: true }).click();
+  await expect.poll(() => page.evaluate(() => window.themePaints.length)).toBe(1);
+  expect(await page.evaluate(() => window.themePaints[0])).toEqual({
+    foreground: 'rgb(20, 43, 70)',
+    background: 'rgb(139, 180, 234)',
+  });
+});
+
 test('downloads readable PDF files from results and history and copies a summary', async ({
   page,
   context,

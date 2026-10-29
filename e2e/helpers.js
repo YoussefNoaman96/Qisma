@@ -42,7 +42,11 @@ export async function openHistory(page) {
 }
 
 export async function settleAnimations(page) {
-  await page.evaluate(() =>
-    Promise.all(document.getAnimations().map((animation) => animation.finished.catch(() => {}))),
-  );
+  await page.evaluate(async () => {
+    // Let React commit theme changes and the browser create their animations before sampling.
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    await Promise.all(
+      document.getAnimations().map((animation) => animation.finished.catch(() => {})),
+    );
+  });
 }
