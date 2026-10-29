@@ -1,4 +1,7 @@
-# Group Expense Splitter
+# Qisma | Fair shares. Clear heads.
+
+[![Quality checks](https://github.com/YoussefNoaman96/Qisma/actions/workflows/quality.yml/badge.svg)](https://github.com/YoussefNoaman96/Qisma/actions/workflows/quality.yml)
+[Source code](https://github.com/YoussefNoaman96/Qisma) · [Architecture](docs/architecture.md)
 
 A full-stack expense-sharing application with optional accounts, private cloud history, and a complete guest experience. Built with JavaScript, React, Tailwind CSS, Node.js, Express, and MongoDB Atlas.
 
@@ -16,6 +19,10 @@ A full-stack expense-sharing application with optional accounts, private cloud h
 
 - Three steps: add at least two members, record expenses, and review settlements.
 - Exact integer-piastre accounting, deterministic remainder allocation, and debt cancellation.
+- Arabic-Indic and Persian numeral input with exact decimal validation.
+- Downloadable PDF reports with embedded Arabic/Latin fonts, selectable text, exact balances, and automatic pagination.
+- Copy a settlement summary for sharing in a group chat.
+- A branded 404 page, recoverable rendering failures, and lightweight entrance motion with reduced-motion support.
 - Add, edit, and delete expenses; preserve dated, immutable split snapshots.
 - Optional registration and sign-in with private, cross-device history.
 - Guest mode with browser-local history and automatic draft recovery.
@@ -24,6 +31,8 @@ A full-stack expense-sharing application with optional accounts, private cloud h
 - Versioned JSON backup export and atomic, deduplicated cloud imports.
 - Responsive sliding authentication panels styled with Tailwind and existing theme tokens.
 - English and Arabic, LTR/RTL layouts, light/dark themes, and keyboard-accessible controls.
+
+![The Qisma recovery page](docs/screenshots/not-found.png)
 
 ## Stack
 
@@ -68,6 +77,8 @@ For Atlas, create a **database user** with access to the application database, a
 npm run dev:full
 ```
 
+The local working copy is now at `D:\codex\Qisma`. Open this folder in VS Code rather than the original university-project folder.
+
 Open **http://127.0.0.1:5173**. Vite proxies `/api` to Node on port 3001 and fails clearly if its port is already occupied instead of silently moving to another port. Stop older development servers before starting another copy. In development, Origin checks accept both `127.0.0.1` and `localhost` on the configured port. Choose one hostname consistently because cookies and localStorage are separate for each hostname. Production accepts only the exact configured origin. Changes to `server/.env` require an API restart.
 
 For a frontend-only guest session, `npm run dev` is sufficient. Authentication and cloud history require the API and database.
@@ -90,7 +101,14 @@ For a frontend-only guest session, `npm run dev` is sufficient. Authentication a
 | `npm run format`      | Format source and documentation                       |
 | `npm run check`       | Lint, check formatting, run unit/API tests, and build |
 
-Install a Playwright browser before browser tests:
+On Windows, reuse the installed Microsoft Edge browser to avoid a browser download:
+
+```powershell
+$env:PLAYWRIGHT_CHANNEL = 'msedge'
+npm run test:e2e
+```
+
+The project-local npm cache and test temporary files stay under the project directory on D. To use Playwright Chromium instead, install its browser before tests:
 
 ```bash
 npx playwright install chromium
@@ -135,7 +153,7 @@ The React `AuthProvider` restores cookie sessions and owns sign-in/out. The API 
 
 Accounting remains independent of React and Express in `src/lib/expenses.js`. Balances and transfers are derived from source expenses rather than stored as mutable duplicate state. Frontend and API validation share pure group invariants; authentication uses the same Zod schemas on both sides.
 
-Routes: `#/split`, `#/history`, `#/history/<id>`, `#/login`, and `#/register`. Hash routing supports static guest demos without rewrite rules.
+Routes: `#/split`, `#/history`, `#/history/<id>`, `#/login`, and `#/register`. Unknown hash routes and unexpected URL paths show the branded 404 view; the production server returns HTTP 404 for missing HTML pages. Hash routing supports static guest demos without rewrite rules.
 
 ## Authentication and Security
 
@@ -149,6 +167,14 @@ Routes: `#/split`, `#/history`, `#/history/<id>`, `#/login`, and `#/register`. H
 - Errors return stable codes and request IDs. Unexpected exceptions and startup failures do not expose database URLs, credentials, passwords, or raw driver errors.
 
 This version uses password authentication without email verification, password-reset delivery, or MFA. It does not display nonfunctional recovery/social-login links. Those features require additional flows and an email provider before they can be offered. See [deployment notes](docs/architecture.md) for operational limits and production setup.
+
+## PDF Reports and Sharing
+
+**Download PDF** on the results page exports the current split; on a saved split it exports that snapshot; on the archive list it exports the full available archive. Reports include save/preparation dates, totals, each member’s exact share and net balance, settlement transfers, and the expense ledger. They use the selected interface language, embed the Amiri font under its SIL Open Font License, preserve selectable text, and paginate long tables. PDF code and fonts load only when requested. Report generation stays on the device and sends no data to a third-party report service.
+
+**Copy summary** prepares text for manual sharing, including the total and settlement transfers. It does not send messages or disclose account credentials or private record URLs. If clipboard access is unavailable, a selectable text field is provided.
+
+PDF is a reading/sharing format. **Export JSON Backup** and **Import JSON Backup** remain available for restoring structured archive data; a PDF cannot be imported as a data backup.
 
 ## Storage, History, and Backups
 
@@ -190,11 +216,19 @@ All endpoints are under `/api`; requests and responses use JSON. Errors use `{ e
 
 ## Verification
 
-Unit tests cover currency parsing, conservation of money, uneven shares, debt cancellation, malformed drafts, guest persistence, backups, and failed writes. API tests cover hashing, cookie flags, validation, CSRF/Origin rejection, rate limits, refresh rotation/reuse, logout revocation, ownership, pagination, and atomic imports.
+Unit tests cover currency parsing, Arabic/Persian numerals, conservation of money, uneven shares, debt cancellation, malformed drafts, guest persistence, backups, failed writes, route parsing, and text extraction/pagination of generated English and Arabic PDFs. API tests cover hashing, cookie flags, validation, CSRF/Origin rejection, rate limits, refresh rotation/reuse, logout revocation, ownership, pagination, and atomic imports.
 
 Browser tests exercise the original guest workflow plus optional registration, explicit guest copying, clean account workspaces, session restoration, cross-browser history access, cloud deletion, and sign-out everywhere. axe-core audits workflow/auth pages in both directions and themes; failure traces and screenshots are retained. Automated accessibility checks complement manual review.
 
 GitHub Actions runs code checks, unit/API integration tests, and browser tests on pushes and pull requests. Workflow execution begins after the project is uploaded to GitHub.
+
+## Branding and Repository
+
+The public product is **Qisma**. Its name refers to fair division in Arabic. The interface remains functional React with pure accounting utilities; the old folder name described its university origin rather than the current architecture. The pie mark represents four clear shares and is supplied as SVG, browser favicon, and an Apple touch icon. The social preview is generated from `public/brand/social-preview.svg`; run `node scripts/brand-assets.mjs` after changing it.
+
+Set the build-time `PUBLIC_SITE_URL` to the actual HTTPS deployment URL to emit absolute Open Graph image and canonical URLs. Without a deployment URL, preview metadata uses the configured Vite base path. The Pages workflow supplies the repository URL and `/Qisma/` base automatically. No production API credentials belong in frontend environment variables.
+
+The local Git history starts with an honest snapshot of the pre-existing application and records the subsequent changes in focused Conventional Commits. It does not invent earlier development dates or represent deterministic invariant tests as a formal property-testing framework.
 
 ## Deployment
 

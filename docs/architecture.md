@@ -1,5 +1,11 @@
 # Architecture and Deployment Notes
 
+## Client reports and recovery
+
+Qisma builds PDF reports on the device with jsPDF and AutoTable. The report module and licensed Amiri fonts load on demand. The PDF contains selectable text and paginated tables rather than screenshots; Arabic shaping and bidirectional ordering preserve mixed Arabic/Latin names and exact numeric amounts. JSON archives retain their versioned import/export contract for restoring data.
+
+Unknown routes render the recovery page, while production HTML requests for missing paths return HTTP 404. A React error boundary provides a reload action without clearing browser data. Entrance animation uses opacity and translation only, with no scroll listener or animation framework; the reduced-motion media query disables it.
+
 ## Request flow
 
 ```mermaid
