@@ -5,16 +5,6 @@
 
 A full-stack expense-sharing application with optional accounts, private cloud history, and a complete guest experience. Built with JavaScript, React, Tailwind CSS, Node.js, Express, and MongoDB Atlas.
 
-## Preview
-
-![Desktop split results](docs/screenshots/desktop.png)
-
-<img src="docs/screenshots/mobile.png" alt="Mobile split history" width="390" />
-
-![Optional account sign-in](docs/screenshots/login.png)
-
-<img src="docs/screenshots/register-mobile.png" alt="Mobile account registration" width="390" />
-
 ## Features
 
 - Three steps: add at least two members, record expenses, and review settlements.
@@ -31,8 +21,6 @@ A full-stack expense-sharing application with optional accounts, private cloud h
 - Versioned JSON backup export and atomic, deduplicated cloud imports.
 - Responsive sliding authentication panels styled with Tailwind and existing theme tokens.
 - English and Arabic, LTR/RTL layouts, light/dark themes, and keyboard-accessible controls.
-
-![The Qisma recovery page](docs/screenshots/not-found.png)
 
 ## Stack
 
@@ -94,7 +82,7 @@ For a frontend-only guest session, `npm run dev` is sufficient. Authentication a
 | `npm test`            | Run pure accounting, draft, and guest-history tests   |
 | `npm run test:server` | Run isolated API/security/database integration tests  |
 | `npm run test:e2e`    | Run guest and account workflows on desktop and mobile |
-| `npm run screenshots` | Generate README workflow screenshots                  |
+| `npm run screenshots` | Generate workflow screenshots                  |
 | `npm run lint`        | Check JavaScript, JSX, and hook usage                 |
 | `npm run format`      | Format source and documentation                       |
 | `npm run check`       | Lint, check formatting, run unit/API tests, and build |
