@@ -77,8 +77,6 @@ For Atlas, create a **database user** with access to the application database, a
 npm run dev:full
 ```
 
-The local working copy is now at `D:\codex\Qisma`. Open this folder in VS Code rather than the original university-project folder.
-
 Open **http://127.0.0.1:5173**. Vite proxies `/api` to Node on port 3001 and fails clearly if its port is already occupied instead of silently moving to another port. Stop older development servers before starting another copy. In development, Origin checks accept both `127.0.0.1` and `localhost` on the configured port. Choose one hostname consistently because cookies and localStorage are separate for each hostname. Production accepts only the exact configured origin. Changes to `server/.env` require an API restart.
 
 For a frontend-only guest session, `npm run dev` is sufficient. Authentication and cloud history require the API and database.
