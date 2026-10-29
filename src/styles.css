@@ -1,0 +1,140 @@
+@import 'tailwindcss';
+@source "./";
+
+/* Original design tokens, shared by Tailwind utilities and both themes. */
+@theme inline {
+  --color-primary: var(--app-primary);
+  --color-secondary: var(--app-secondary);
+  --color-accent: var(--app-accent);
+  --color-success: var(--app-success);
+  --color-danger: var(--app-danger);
+  --color-warning: var(--app-warning);
+  --color-page: var(--app-page);
+  --color-surface: var(--app-surface);
+  --color-subtle: var(--app-subtle);
+  --color-tag: var(--app-tag);
+  --color-ink: var(--app-ink);
+  --color-muted: var(--app-muted);
+  --color-line: var(--app-line);
+  --color-control: var(--app-control);
+  --color-action-primary: var(--app-action-primary);
+  --color-action-primary-hover: var(--app-action-primary-hover);
+  --color-on-primary: var(--app-on-primary);
+  --color-action-success: var(--app-action-success);
+  --color-action-success-hover: var(--app-action-success-hover);
+  --color-on-success: var(--app-on-success);
+  --color-action-danger: var(--app-action-danger);
+  --color-action-danger-hover: var(--app-action-danger-hover);
+  --color-on-danger: var(--app-on-danger);
+  --shadow-card: var(--app-shadow);
+  --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --app-primary: #4a6fa5;
+  --app-secondary: #166088;
+  --app-accent: #4fc3a1;
+  --app-success: #20796f;
+  --app-danger: #c82537;
+  --app-action-primary: #4a6fa5;
+  --app-action-primary-hover: #365782;
+  --app-on-primary: #fff;
+  --app-action-success: #20796f;
+  --app-action-success-hover: #185f57;
+  --app-on-success: #fff;
+  --app-action-danger: #c82537;
+  --app-action-danger-hover: #a91f2e;
+  --app-on-danger: #fff;
+  --app-hero-from: #4a6fa5;
+  --app-hero-to: #166088;
+  --app-warning: #f4a261;
+  --app-page: #f8f9fa;
+  --app-surface: #fff;
+  --app-subtle: #f8f9fa;
+  --app-tag: #e9ecef;
+  --app-ink: #343a40;
+  --app-muted: #626c75;
+  --app-line: #ddd;
+  --app-control: #7e8994;
+  --app-shadow: 0 4px 6px rgb(0 0 0 / 0.1);
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --app-primary: #8bb4ea;
+  --app-secondary: #8dc6ed;
+  --app-accent: #5cd6b3;
+  --app-success: #4cd9b0;
+  --app-danger: #ff9696;
+  --app-warning: #ffb347;
+  --app-action-primary: #8bb4ea;
+  --app-action-primary-hover: #a6c9f4;
+  --app-on-primary: #142b46;
+  --app-action-success: #4cd9b0;
+  --app-action-success-hover: #78e5c4;
+  --app-on-success: #12382e;
+  --app-action-danger: #ff6b6b;
+  --app-action-danger-hover: #ff8b8b;
+  --app-on-danger: #491017;
+  --app-hero-from: #365b8b;
+  --app-hero-to: #174d70;
+  --app-page: #1e1e1e;
+  --app-surface: #2d2d2d;
+  --app-subtle: #3a3a3a;
+  --app-tag: #3a3a3a;
+  --app-ink: #f8f9fa;
+  --app-muted: #aaa;
+  --app-line: #555;
+  --app-control: #8e99a4;
+  --app-shadow: 0 4px 6px rgb(0 0 0 / 0.3);
+  color-scheme: dark;
+}
+
+@layer base {
+  body {
+    @apply min-h-screen bg-page font-sans leading-[1.6] text-ink;
+  }
+  button,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+  button,
+  input,
+  select {
+    @apply transition-colors;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-primary;
+  }
+}
+
+@layer components {
+  .field {
+    @apply block min-h-12 w-full min-w-0 rounded-lg border border-control bg-surface px-[15px] py-3 text-base text-ink placeholder:text-muted focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary;
+  }
+  .field[aria-invalid='true'] {
+    @apply border-danger focus:border-danger focus:ring-danger;
+  }
+  .field-label {
+    @apply mb-2 block font-semibold text-secondary;
+  }
+  .card {
+    @apply rounded-[10px] bg-surface p-4 shadow-card sm:p-[25px];
+  }
+  .action-row {
+    @apply mt-[30px] flex flex-col justify-between gap-3 min-[480px]:flex-row;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
