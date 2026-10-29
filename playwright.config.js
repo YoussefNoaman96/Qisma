@@ -1,4 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
+import { mkdirSync } from 'node:fs';
+import path from 'node:path';
+
+// Keep browser profiles, traces, and temporary test databases on the project drive.
+const runtimeTemp = path.resolve('.tmp/runtime');
+mkdirSync(runtimeTemp, { recursive: true });
+process.env.TEMP = runtimeTemp;
+process.env.TMP = runtimeTemp;
 
 export default defineConfig({
   testDir: './e2e',

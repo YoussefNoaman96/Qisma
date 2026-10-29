@@ -6,6 +6,10 @@ import { connectDatabase } from '../config/database.js';
 
 // Tests always create an isolated replica set. They never read server/.env or Atlas.
 export async function startTestDatabase() {
+  const runtimeTemp = path.resolve('.tmp/runtime');
+  await mkdir(runtimeTemp, { recursive: true });
+  process.env.TEMP = runtimeTemp;
+  process.env.TMP = runtimeTemp;
   const directory = path.resolve('.tmp/mongodb');
   await mkdir(directory, { recursive: true });
   const database = await MongoMemoryReplSet.create({
