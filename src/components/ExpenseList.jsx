@@ -28,10 +28,12 @@ export default function ExpenseList({ members, expenses, onRemove, onEdit }) {
             </div>
             <div className="flex flex-col gap-2 text-sm text-muted sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
               <span className="min-w-0 break-words">
-                {t('paidBy')}: <bdi>{membersById.get(expense.payerId).name}</bdi>
+                {t('paidBy')}:{' '}
+                <bdi>{membersById.get(expense.payerId)?.name ?? t('unknownMember')}</bdi>
               </span>
               <span>
-                {t('sharePerPerson')}: {money(expense.amount / members.length)}
+                {t('sharePerPerson')}:{' '}
+                {members.length > 0 ? money(expense.amount / members.length) : '—'}
               </span>
               <time dateTime={expense.createdAt}>
                 {new Date(expense.createdAt).toLocaleDateString(

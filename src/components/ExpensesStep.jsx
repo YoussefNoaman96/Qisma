@@ -40,11 +40,9 @@ export default function ExpensesStep({ group }) {
           <input
             ref={amountRef}
             id="expense-amount"
-            type="number"
+            type="text"
             inputMode="decimal"
-            min="0.01"
-            max="999999999.99"
-            step="0.01"
+            maxLength={64}
             value={amount}
             onChange={(event) => group.updateExpenseForm('amount', event.target.value)}
             className="field"

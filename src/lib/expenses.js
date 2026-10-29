@@ -1,7 +1,17 @@
 // All accounting uses integer piastres, never floating-point EGP values.
+export function normalizeNumerals(value) {
+  if (typeof value !== 'string') return '';
+  return value.replace(/[٠-٩۰-۹٫]/gu, (character) => {
+    if (character === '٫') return '.';
+    const code = character.codePointAt(0);
+    return String(code >= 0x06f0 ? code - 0x06f0 : code - 0x0660);
+  });
+}
+
 export function parseAmount(value) {
-  if (!/^\d+(\.\d{1,2})?$/.test(value)) return null;
-  const [pounds, fraction = ''] = value.split('.');
+  const normalized = normalizeNumerals(value);
+  if (!/^\d+(\.\d{1,2})?$/.test(normalized)) return null;
+  const [pounds, fraction = ''] = normalized.split('.');
   const cents = Number(pounds) * 100 + Number(fraction.padEnd(2, '0'));
   return Number.isSafeInteger(cents) && cents > 0 && cents <= 99999999999 ? cents : null;
 }
@@ -48,10 +58,12 @@ export function calculateResults(members, expenses) {
 function settleBalances(balances) {
   const creditors = balances
     .filter((member) => member.balance > 0)
-    .map((member) => ({ id: member.id, remaining: member.balance }));
+    .map((member) => ({ id: member.id, remaining: member.balance }))
+    .sort((first, second) => second.remaining - first.remaining);
   const debtors = balances
     .filter((member) => member.balance < 0)
-    .map((member) => ({ id: member.id, remaining: -member.balance }));
+    .map((member) => ({ id: member.id, remaining: -member.balance }))
+    .sort((first, second) => second.remaining - first.remaining);
   const transactions = [];
   let creditorIndex = 0;
   let debtorIndex = 0;

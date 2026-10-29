@@ -14,6 +14,12 @@ test('amount parsing is exact, bounded and rejects invalid precision', () => {
   }
 });
 
+test('Arabic and Persian digits keep exact piastre values without accepting grouping or invalid precision', () => {
+  for (const value of ['١٢٣٫٤٥', '۱۲۳.۴۵', '123.45']) assert.equal(parseAmount(value), 12345);
+  for (const value of ['١٫٠٠١', '٠', '١٬٢٣٤', '1,234', null, {}, 12])
+    assert.equal(parseAmount(value), null);
+});
+
 test('a 100 EGP expense splits into 33.34, 33.33 and 33.33 without lost piastres', () => {
   const result = calculateResults(members, [expense(10000)]);
   assert.equal(result.total, 10000);

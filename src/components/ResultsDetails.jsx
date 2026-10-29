@@ -77,14 +77,14 @@ export default function ResultsDetails({ members, expenses, results }) {
                 <div className="flex min-w-0 items-center gap-2 text-primary">
                   <DirectionArrow />
                   <strong className="min-w-0 break-words text-ink">
-                    <bdi>{membersById.get(transaction.fromId).name}</bdi>
+                    <bdi>{membersById.get(transaction.fromId)?.name ?? t('unknownMember')}</bdi>
                   </strong>
                 </div>
                 <div className="min-w-0 break-words">
                   <span>
                     {t('paysTo')}{' '}
                     <strong>
-                      <bdi>{membersById.get(transaction.toId).name}</bdi>
+                      <bdi>{membersById.get(transaction.toId)?.name ?? t('unknownMember')}</bdi>
                     </strong>
                   </span>
                   <p className="font-semibold text-secondary">{money(transaction.amount)}</p>
