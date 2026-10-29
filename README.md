@@ -7,13 +7,13 @@ A full-stack expense-sharing application with optional accounts, private cloud h
 
 ## Preview
 
-![Desktop split results](docs/screenshots/desktop.png)
-
-<img src="docs/screenshots/mobile.png" alt="Mobile split history" width="390" />
-
-![Optional account sign-in](docs/screenshots/login.png)
-
-<img src="docs/screenshots/register-mobile.png" alt="Mobile account registration" width="390" />
+<div align="center">
+  <img src="docs/screenshots/desktop.png" alt="Desktop split results" width="60%" />
+  <img src="docs/screenshots/mobile.png" alt="Mobile split history" width="25%" />
+  <br />
+  <img src="docs/screenshots/login.png" alt="Optional account sign-in" width="60%" />
+  <img src="docs/screenshots/register-mobile.png" alt="Mobile account registration" width="25%" />
+</div>
 
 ## Features
 
