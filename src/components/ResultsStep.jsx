@@ -5,6 +5,7 @@ import { sameSplit } from '../lib/splitHistory';
 import { Button, DirectionArrow, SectionTitle } from './ui';
 import ConfirmDialog from './ConfirmDialog';
 import ResultsDetails from './ResultsDetails';
+import ReportActions from './ReportActions';
 
 export default function ResultsStep({ group, archive }) {
   const { t } = useTranslation();
@@ -53,6 +54,7 @@ export default function ResultsStep({ group, archive }) {
         </div>
       )}
       <ResultsDetails members={group.members} expenses={group.expenses} results={group.results} />
+      <ReportActions split={saved ?? { members: group.members, expenses: group.expenses }} />
       <div className="action-row">
         <Button variant="warning" onClick={() => group.goToStep(2)}>
           <DirectionArrow back />

@@ -41,6 +41,16 @@ export function createApp(config) {
         },
       }),
     );
+    // Real HTTP 404s still render the branded SPA; API and missing assets remain errors.
+    app.use((req, res, next) => {
+      if (
+        req.method === 'GET' &&
+        req.headers.accept?.includes('text/html') &&
+        !req.path.startsWith('/assets/')
+      ) {
+        res.status(404).set('Cache-Control', 'no-cache').sendFile(`${directory}index.html`);
+      } else next();
+    });
   }
   app.use((_req, _res, next) => next(new AppError(404, 'NOT_FOUND')));
   app.use(errorHandler);

@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { downloadJson } from '../lib/download';
 import { MAX_BACKUP_BYTES } from '../lib/splitHistory';
 import { Button } from './ui';
+import PdfExportButton from './PdfExportButton';
 
-export default function HistoryToolbar({ archive, onClear }) {
+export default function HistoryToolbar({ archive, onClear, detail = false }) {
   const { t } = useTranslation();
   const inputRef = useRef(null);
   const [importing, setImporting] = useState(false);
@@ -38,6 +39,15 @@ export default function HistoryToolbar({ archive, onClear }) {
 
   return (
     <div className="mb-5 flex flex-col flex-wrap gap-3 sm:flex-row">
+      {!detail && (
+        <PdfExportButton
+          disabled={archive.loading || archive.readError || archive.records.length === 0}
+          getSplits={async () => {
+            const backup = await archive.exportBackup();
+            return backup === null ? [] : JSON.parse(backup).splits;
+          }}
+        />
+      )}
       <Button
         variant="neutral"
         onClick={handleExport}

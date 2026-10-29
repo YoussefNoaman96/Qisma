@@ -2,16 +2,15 @@ import { useState } from 'react';
 import { Banknote, Languages, Moon, Sun } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Dropdown from './Dropdown';
+import Brand from './Brand';
 
 export default function Header({ theme, setTheme, compact = false }) {
   const { t, i18n } = useTranslation();
   const [openMenu, setOpenMenu] = useState(null);
   return (
     <>
-      <div className="mb-[30px] flex flex-col gap-4 rounded-[10px] bg-surface px-4 py-[15px] shadow-card sm:flex-row sm:items-center sm:justify-between sm:px-5">
-        <div className="min-w-0 text-[1.5rem] font-bold text-primary sm:text-[1.8rem]">
-          {t('appTitle')}
-        </div>
+      <div className="page-reveal relative z-30 mb-[30px] flex flex-col gap-4 rounded-[10px] bg-surface px-4 py-[15px] shadow-card sm:flex-row sm:items-center sm:justify-between sm:px-5">
+        <Brand />
         <div className="grid w-full shrink-0 grid-cols-2 items-center gap-3 sm:flex sm:w-auto">
           <Dropdown
             label={t('themeLabel')}

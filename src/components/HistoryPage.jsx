@@ -85,7 +85,11 @@ export default function HistoryPage({ archive, splitId }) {
           {t(archive.cloud ? 'cloud.historyDescription' : 'historyDescription')}
         </p>
       )}
-      <HistoryToolbar archive={archive} onClear={() => setConfirmation({ type: 'all' })} />
+      <HistoryToolbar
+        archive={archive}
+        detail={!!splitId}
+        onClear={() => setConfirmation({ type: 'all' })}
+      />
       {content}
       {!splitId && archive.nextCursor && (
         <Button

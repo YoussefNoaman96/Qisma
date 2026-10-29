@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#f5f8fc"/>
+  <circle cx="1050" cy="45" r="335" fill="#e8f0fa"/>
+  <circle cx="1100" cy="550" r="290" fill="#e3f3ee"/>
+  <g transform="translate(72 64)">
+    <rect width="64" height="64" rx="18" fill="#4a6fa5"/>
+    <path d="M29 12A17 17 0 0 0 12 29h17V12Z" fill="#fff"/>
+    <path d="M35 12a17 17 0 0 1 17 17H35V12Z" fill="#4fc3a1"/>
+    <path d="M12 35a17 17 0 0 0 17 17V35H12Zm23 0v17a17 17 0 0 0 17-17H35Z" fill="#fff"/>
+  </g>
+  <g font-family="Segoe UI,Arial,sans-serif">
+    <text x="154" y="110" fill="#4a6fa5" font-size="46" font-weight="700">Qisma</text>
+    <text x="72" y="250" fill="#243751" font-size="67" font-weight="700" letter-spacing="-2">Good company.</text>
+    <text x="72" y="332" fill="#4a6fa5" font-size="67" font-weight="700" letter-spacing="-2">Fair shares.</text>
+    <text x="76" y="402" fill="#626c75" font-size="24">Split expenses. Settle up. Stay friends.</text>
+    <rect x="76" y="477" width="264" height="44" rx="22" fill="#e6eef8"/>
+    <text x="96" y="506" fill="#365782" font-size="18" font-weight="600">EN / AR · PRIVATE HISTORY</text>
+  </g>
+  <g transform="translate(710 119) rotate(5 185 190)">
+    <rect x="-8" y="12" width="360" height="386" rx="24" fill="#cfdeed" opacity=".6"/>
+    <rect width="360" height="386" rx="24" fill="#fff" stroke="#d8e2ee"/>
+    <g font-family="Segoe UI,Arial,sans-serif">
+      <text x="28" y="48" fill="#626c75" font-size="13" font-weight="700" letter-spacing="2">THE GOOD TIMES LEDGER</text>
+      <path d="M28 72H332" stroke="#d8e2ee" stroke-dasharray="5 5"/>
+      <text x="28" y="112" fill="#243751" font-size="21" font-weight="600">Dinner with the group</text>
+      <text x="28" y="150" fill="#4a6fa5" font-size="32" font-weight="700">600.00 EGP</text>
+      <path d="M28 175H332" stroke="#e6ebf1"/>
+      <text x="28" y="215" fill="#626c75" font-size="17">3 friends</text>
+      <text x="28" y="245" fill="#626c75" font-size="17">200.00 EGP each</text>
+      <rect x="28" y="282" width="304" height="64" rx="13" fill="#eaf7f1"/>
+      <circle cx="59" cy="314" r="12" fill="#20796f"/>
+      <path d="m53 314 4 4 8-9" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="83" y="321" fill="#185f57" font-size="18" font-weight="600">Everyone knows their share.</text>
+    </g>
+  </g>
+</svg>

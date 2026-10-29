@@ -17,6 +17,7 @@ import { useAuth } from './auth/AuthContext';
 import { accountDraftStorage } from './auth/draftStorage';
 import AccountBar from './auth/AccountBar';
 import AuthLayout from './pages/auth/AuthLayout';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -34,8 +35,7 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = i18n.resolvedLanguage;
     document.documentElement.dir = i18n.dir();
-    document.title =
-      route.page === 'history' ? `${t('historyTitle')} | ${t('appTitle')}` : t('appTitle');
+    document.title = `${t(route.page === 'not-found' ? 'notFound.pageTitle' : route.page === 'history' ? 'historyTitle' : 'headerTitle')} | ${t('appTitle')}`;
     savePreference('expenseSplitterLanguage', i18n.resolvedLanguage);
   }, [i18n, i18n.resolvedLanguage, t, route.page]);
 
@@ -52,13 +52,15 @@ export default function App() {
 
   return (
     <div className="mx-auto max-w-[1240px] p-3 sm:p-5">
-      <Header theme={theme} setTheme={setTheme} compact={authPage} />
-      {loading ? (
+      <Header theme={theme} setTheme={setTheme} compact={authPage || route.page === 'not-found'} />
+      {route.page === 'not-found' ? (
+        <NotFound />
+      ) : loading ? (
         <main className="card">
           <p role="status">{t('auth.restoring')}</p>
         </main>
       ) : authPage ? (
-        <main>
+        <main className="page-reveal">
           <AuthLayout mode={route.page} notify={notify} />
         </main>
       ) : (
@@ -95,7 +97,7 @@ function Workspace({ user, route, notify }) {
         ref={sectionRef}
         tabIndex={-1}
         aria-labelledby="section-heading"
-        className="card outline-none"
+        className="card page-reveal outline-none"
       >
         {route.page === 'split' && <DraftNotice group={group} />}
         {route.page === 'history' ? (

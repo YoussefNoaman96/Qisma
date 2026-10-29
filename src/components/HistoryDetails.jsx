@@ -5,6 +5,7 @@ import { formatDateTime } from '../lib/format';
 import { Button, DirectionArrow } from './ui';
 import ExpenseList from './ExpenseList';
 import ResultsDetails from './ResultsDetails';
+import ReportActions from './ReportActions';
 
 export default function HistoryDetails({ split, onDelete }) {
   const { t, i18n } = useTranslation();
@@ -31,6 +32,7 @@ export default function HistoryDetails({ split, onDelete }) {
         expenses={split.expenses}
         results={calculateResults(split.members, split.expenses)}
       />
+      <ReportActions split={split} />
       <h3 className="mt-6 text-lg font-bold text-primary">{t('expensesListLabel')}</h3>
       <ExpenseList members={split.members} expenses={split.expenses} />
       <Button variant="danger" className="mt-4 w-full sm:w-auto" onClick={() => onDelete(split)}>

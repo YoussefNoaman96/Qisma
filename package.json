@@ -1,5 +1,5 @@
 {
-  "name": "group-expense-splitter",
+  "name": "qisma",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -14,13 +14,14 @@
     "lint": "eslint . --max-warnings 0",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "test:e2e": "playwright test e2e/app.spec.js e2e/auth.spec.js",
+    "test:e2e": "playwright test e2e/app.spec.js e2e/auth.spec.js e2e/product.spec.js",
     "screenshots": "playwright test e2e/documentation.spec.js --project=desktop",
     "check": "npm run lint && npm run format:check && npm test && npm run test:server && npm run build",
     "dev:server": "node --env-file-if-exists=server/.env --watch server/index.js",
     "dev:full": "concurrently -k \"npm:dev\" \"npm:dev:server\"",
     "start": "node --env-file-if-exists=server/.env server/index.js",
-    "test:server": "node --test --test-concurrency=1 server/tests/*.test.js"
+    "test:server": "node --test --test-concurrency=1 server/tests/*.test.js",
+    "brand:assets": "node scripts/brand-assets.mjs"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.2.2",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^10.0.1",
+    "@napi-rs/canvas": "^1.0.13",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/vite": "^4.0.0",
     "@vitejs/plugin-react": "^4.5.0",
@@ -50,6 +52,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.13.0",
     "mongodb-memory-server-core": "^11.3.0",
+    "pdfjs-dist": "^6.4.299",
     "prettier": "^3.9.10",
     "supertest": "^7.3.1",
     "tailwindcss": "^4.0.0",

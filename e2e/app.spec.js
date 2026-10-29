@@ -139,7 +139,7 @@ test('deletes one record or all history with confirmation, and restores a dedupl
   await dialog.getByRole('button', { name: 'Delete Split', exact: true }).click();
   await expect(page.getByRole('link', { name: 'View Details', exact: true })).toHaveCount(1);
   const downloadPromise = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export Backup', exact: true }).click();
+  await page.getByRole('button', { name: 'Export JSON Backup', exact: true }).click();
   const download = await downloadPromise;
   const backupPath = testInfo.outputPath('backup.json');
   await download.saveAs(backupPath);

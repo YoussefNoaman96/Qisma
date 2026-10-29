@@ -33,4 +33,8 @@ test('capture the live English interface for the README', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await settleAnimations(page);
   await page.screenshot({ path: 'docs/screenshots/register-mobile.png', fullPage: true });
+  await page.goto('/#/lost');
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await settleAnimations(page);
+  await page.screenshot({ path: 'docs/screenshots/not-found.png', fullPage: true });
 });

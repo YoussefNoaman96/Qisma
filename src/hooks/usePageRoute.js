@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
+import { parseRoute } from '../lib/routes';
 
 function readRoute() {
-  const [page, splitId] = window.location.hash.slice(2).split('/');
-  return {
-    page: ['history', 'login', 'register'].includes(page) ? page : 'split',
-    splitId: page === 'history' ? splitId || null : null,
-  };
+  return parseRoute(window.location.hash, window.location.pathname, import.meta.env.BASE_URL);
 }
 
 // Hash routes work on static hosting and support browser Back/Forward.
